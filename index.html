@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio Website</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    window.onload = function() {
+      emailjs.init("US7qlhdZz4z51WP9s");
+    };
+  </script>
 </head>
 <body class="bg-white text-gray-900 font-sans">
   <!-- Navbar -->
@@ -57,12 +63,26 @@
     <div class="container mx-auto px-4 max-w-xl text-center">
       <h3 class="text-3xl font-semibold mb-6">Contact Me</h3>
       <form class="space-y-4">
-        <input type="text" placeholder="Your Name" class="w-full p-2 border border-gray-300 rounded" required />
-        <input type="email" placeholder="Your Email" class="w-full p-2 border border-gray-300 rounded" required />
-        <textarea placeholder="Your Message" class="w-full p-2 border border-gray-300 rounded" rows="5" required></textarea>
+        <input type="text" name="name" placeholder="Your Name" class="w-full p-2 border border-gray-300 rounded" required />
+        <input type="email" name="email" placeholder="Your Email" class="w-full p-2 border border-gray-300 rounded" required />
+        <textarea placeholder="Your Message" name="message" class="w-full p-2 border border-gray-300 rounded" rows="5" required></textarea>
         <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Send</button>
       </form>
     </div>
   </section>
+    <!-- EmailJS Form Script -->
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm("service_vus5zhm", "template_7d9s5ie", this)
+        .then(() => {
+          document.getElementById("form-response").classList.remove("hidden");
+          this.reset();
+        }, (error) => {
+          alert("Failed to send message: " + error.text);
+        });
+    });
+  </script>
 </body>
 </html>
